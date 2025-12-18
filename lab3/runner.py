@@ -9,9 +9,9 @@ from typing import Dict, List, Tuple
 
 from configs.cfg import LAB3_POLY
 from dto import Fault
+from helpers.circuit_factory import create_circuit_variant_3
 from helpers.lfsr import LFSR, parse_polynomial
 from lab1 import run_lab1
-from pipelines.pages.app import create_circuit
 
 logger = logging.getLogger(__name__)
 
@@ -25,7 +25,7 @@ class SeedResult:
 
 def run_lab3(polynomial: str = LAB3_POLY) -> SeedResult | None:
     """Find minimal LFSR seed that covers all Lab1 faults."""
-    circuit = create_circuit()
+    circuit = create_circuit_variant_3()
     ordered_inputs = sorted(circuit.inputs)
     required_map, total_faults = _build_required_vectors(circuit, ordered_inputs)
 
