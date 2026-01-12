@@ -52,7 +52,7 @@ def run_lab3(polynomial: str = LAB3_POLY) -> SeedResult | None:
             best = result
 
     if best:
-        logger.info("Best seed: %s (0x%X)", format_seed(best.seed, degree), best.seed)
+        logger.info("Best seed: %s (0x%X)", f"{best.seed:0{degree}b}", best.seed)
         logger.info("Cycles to full coverage: %d", best.cycles)
         for hit in best.hits:
             logger.info(
@@ -97,7 +97,7 @@ def _evaluate_seed(
     hits: List[Dict[str, object]] = []
 
     for cycle in range(1, lfsr.period + 1):
-        vector = _vector_from_state(lfsr.state, len(ordered_inputs))
+        vector = "".join(str((lfsr.state >> bit) & 1) for bit in range(len(ordered_inputs)))
         faults = required_map.get(vector)
         if faults:
             new_faults = faults - coverage
@@ -117,11 +117,5 @@ def _evaluate_seed(
     return None
 
 
-def _vector_from_state(state: int, width: int) -> str:
-    return "".join(str((state >> bit) & 1) for bit in range(width))
-
-
-def format_seed(seed: int, degree: int) -> str:
-    return f"{seed:0{degree}b}"
 
 

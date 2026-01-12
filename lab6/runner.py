@@ -50,7 +50,7 @@ def run_lab6(
     logger.info("CRT params: N=%d, q=%d, candidates=%d, metric=%s", n, q, candidates, metric)
     logger.info("Generated vectors:")
     for i, v in enumerate(vectors):
-        logger.info("  T%d: %s", i, bits_to_str(v))
+        logger.info("  T%d: %s", i, "".join(str(b) for b in v))
     logger.info(
         "Coverage on Lab1/2 circuit (variant 3): %d/%d (%.1f%%)",
         cov.detected,
@@ -96,24 +96,21 @@ def generate_crt(
 
 def _score_candidate(candidate: List[int], prev: List[List[int]], metric: Metric) -> float:
     if metric == "thd":
-        return float(sum(hamming_distance(candidate, p) for p in prev))
+        return float(sum(_hamming(candidate, p) for p in prev))
     if metric == "tcd":
-        return float(sum(cartesian_distance(candidate, p) for p in prev))
+        return float(sum(math.sqrt(_hamming(candidate, p)) for p in prev))
     raise ValueError("unknown metric")
 
 
-def hamming_distance(a: List[int], b: List[int]) -> int:
+def _hamming(a: List[int], b: List[int]) -> int:
     return sum(1 for x, y in zip(a, b) if x != y)
-
-
-def cartesian_distance(a: List[int], b: List[int]) -> float:
-    return math.sqrt(hamming_distance(a, b))
 
 
 def _rand_bits(rng: random.Random, n: int) -> List[int]:
     return [rng.randint(0, 1) for _ in range(n)]
 
 
-def bits_to_str(bits: List[int]) -> str:
-    return "".join(str(b) for b in bits)
+
+
+
 

@@ -17,3 +17,8 @@ def create_circuit_variant_3() -> Circuit:
 
     return Circuit(inputs=inputs, outputs=outputs, gates=gates)
 
+
+
+
+
+

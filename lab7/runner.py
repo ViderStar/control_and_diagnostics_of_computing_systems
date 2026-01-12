@@ -34,7 +34,7 @@ def run_lab7(*, seed: int | None = 1) -> Lab7Result:
     logger.info("=== Lab 7: FAR + OCRT ===")
     logger.info("FAR (N=7, q=5):")
     for i, v in enumerate(far_vectors):
-        logger.info("  T%d: %s", i, bits_to_str(v))
+        logger.info("  T%d: %s", i, "".join(str(b) for b in v))
     logger.info(
         "FAR coverage on Lab1/2 circuit (variant 3): %d/%d (%.1f%%)",
         far_cov.detected,
@@ -44,7 +44,7 @@ def run_lab7(*, seed: int | None = 1) -> Lab7Result:
 
     logger.info("OCRT (N=8, q=8):")
     for i, v in enumerate(ocrt_vectors):
-        logger.info("  T%d: %s", i, bits_to_str(v))
+        logger.info("  T%d: %s", i, "".join(str(b) for b in v))
     logger.info(
         "OCRT coverage on Lab1/2 circuit (variant 3): %d/%d (%.1f%%)",
         ocrt_cov.detected,
@@ -129,6 +129,7 @@ def _rand_bits(rng: random.Random, n: int) -> List[int]:
     return [rng.randint(0, 1) for _ in range(n)]
 
 
-def bits_to_str(bits: List[int]) -> str:
-    return "".join(str(b) for b in bits)
+
+
+
 

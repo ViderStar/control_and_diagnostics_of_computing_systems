@@ -62,7 +62,7 @@ def find_test_for_fault(circuit: Circuit, fault: Fault) -> Optional[Dict[str, in
             faulty_out = simulate_with_fault(circuit, test, fault)
             
             if normal_out[circuit.outputs[0]] != faulty_out[circuit.outputs[0]]:
-                logger.info(f"Test for {fault.pole}/{fault.stuck_at}: {format_test(test, circuit)}")
+                logger.info(f"Test for {fault.pole}/{fault.stuck_at}: {''.join(str(test[inp]) for inp in sorted(circuit.inputs))}")
                 return test
     
     return None
@@ -86,7 +86,7 @@ def find_test_for_input_fault(circuit: Circuit, fault: Fault) -> Optional[Dict[s
         faulty_out = circuit.evaluate(faulty_test)
         
         if normal_out[circuit.outputs[0]] != faulty_out[circuit.outputs[0]]:
-            logger.info(f"Test for {fault.pole}/{fault.stuck_at}: {format_test(test, circuit)}")
+            logger.info(f"Test for {fault.pole}/{fault.stuck_at}: {''.join(str(test[inp]) for inp in sorted(circuit.inputs))}")
             return test
     
     return None
@@ -110,9 +110,6 @@ def simulate_with_fault(circuit: Circuit, inputs: Dict[str, int], fault: Fault) 
     return values
 
 
-def format_test(test: Dict[str, int], circuit: Circuit) -> str:
-    """Format test vector"""
-    return ''.join(str(test[inp]) for inp in sorted(circuit.inputs))
 
 
 def run_lab1(circuit: Circuit):

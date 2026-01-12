@@ -76,3 +76,8 @@ def map_bits_to_inputs(bits: List[int], inputs: List[str]) -> Dict[str, int]:
         mapped[name] = bits[i] if i < len(bits) else 0
     return mapped
 
+
+
+
+
+

@@ -29,27 +29,19 @@ def walking_01(memory: MemoryArray, ctx: TestContext) -> None:
         memory.write(base, 0)
 
 
-def walking_complexity(cells: int) -> int:
-    return cells + cells * (cells + 2)
-
-
-def mats_complexity(cells: int) -> int:
-    return 6 * cells
-
-
 def get_lab4_tests() -> List[TestDefinition]:
     return [
         TestDefinition(
             name="Walking 0/1",
             runner=walking_01,
-            complexity_fn=walking_complexity,
+            complexity_fn=lambda n: n + n * (n + 2),
             complexity_label="~N^2",
             description="Walking pattern with single hot cell.",
         ),
         TestDefinition(
             name="MATS++",
             runner=mats_pp,
-            complexity_fn=mats_complexity,
+            complexity_fn=lambda n: 6 * n,
             complexity_label="6N",
             description="March test with up/down sweeps.",
         ),

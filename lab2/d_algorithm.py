@@ -225,11 +225,6 @@ def cube_to_test(cube: Cube, circuit: Circuit) -> Optional[Dict[str, int]]:
     return test
 
 
-def format_test(test: Dict[str, int], circuit: Circuit) -> str:
-    """Format test vector"""
-    return ''.join(str(test[inp]) for inp in sorted(circuit.inputs))
-
-
 def run_lab2(circuit: Circuit):
     """Run lab 2 for all faults"""
     logger.info("\n=== Lab 2: D-Algorithm ===\n")
@@ -251,7 +246,7 @@ def run_lab2(circuit: Circuit):
             
             if cube:
                 test = cube_to_test(cube, circuit)
-                test_str = format_test(test, circuit)
+                test_str = ''.join(str(test[inp]) for inp in sorted(circuit.inputs))
                 
                 logger.info(f"Test for {fault.pole}/{fault.stuck_at}: {test_str}")
                 covered_faults.append(f"{fault.pole}/{fault.stuck_at}")
